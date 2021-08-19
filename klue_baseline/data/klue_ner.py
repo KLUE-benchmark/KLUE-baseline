@@ -125,6 +125,7 @@ class KlueNERProcessor(DataProcessor):
                 for i, token in enumerate(tokenized_word):
                     token = token.replace(strip_char, "")
                     if not token:
+                        modi_labels.append('O')
                         continue
                     modi_labels.append(original_clean_labels[char_idx])
                     if not contain_unk:
