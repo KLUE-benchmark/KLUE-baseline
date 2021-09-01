@@ -32,9 +32,6 @@ All test sets are not publicly available. To measure performance of your model o
 
 To reproduce our baselines, run `run_all.sh`. 
 
-**NOTE**: `klue/roberta` models accept input length at most 510 tokens. Details are explained [here](https://github.com/KLUE-benchmark/KLUE/wiki/KLUE-RoBERTa%EC%9D%98-max_length%EA%B0%80-510%EC%9D%B8-%EC%9D%B4%EC%9C%A0).
-
-
 ## Reference
 
 If you use this code or KLUE, please cite:

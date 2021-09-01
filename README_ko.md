@@ -31,8 +31,6 @@ git submodule update --init --recursive
 
 KLUE의 모든 과제들의 학습 셋을 활용해 모델을 학습 및 평가하려면 ``run_all.sh``. 실행하시면 됩니다.
 
-**NOTE**: `klue/roberta`의 경우 입력의 최대 길이가 510입니다. 자세한 설명은 [여기](https://github.com/KLUE-benchmark/KLUE/wiki/KLUE-RoBERTa%EC%9D%98-max_length%EA%B0%80-510%EC%9D%B8-%EC%9D%B4%EC%9C%A0)를 참조해주세요.
-
 ## Reference
 
 이 저장소의 코드나 KLUE 데이터를 활용하신다면, 아래를 인용 부탁드립니다.
