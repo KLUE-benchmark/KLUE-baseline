@@ -57,7 +57,7 @@ def klue_ner_entity_macro_f1(preds: np.ndarray, labels: np.ndarray, label_list: 
 
 def klue_ner_char_macro_f1(preds: np.ndarray, labels: np.ndarray, label_list: List[str]) -> Any:
     """KLUE-NER character level macro f1 (except O tag)"""
-    label_indices = list(range(len(label_list)))
+    label_indices = list(range(len(label_list) - 1))
     preds = np.array(preds).flatten().tolist()
     trues = np.array(labels).flatten().tolist()
     return sklearn.metrics.f1_score(trues, preds, labels=label_indices, average="macro", zero_division=True) * 100.0
