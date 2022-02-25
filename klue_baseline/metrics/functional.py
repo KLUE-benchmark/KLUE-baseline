@@ -4,6 +4,7 @@ from typing import Any, Dict, List, Sequence
 import numpy as np
 import sklearn
 from scipy.stats import pearsonr
+from sklearn.metrics import f1_score as skl_f1_score
 from seqeval.metrics import f1_score as ner_f1_score
 from seqeval.scheme import IOB2
 
@@ -21,7 +22,7 @@ logger = logging.getLogger(__name__)
 
 
 def ynat_macro_f1(preds: np.ndarray, targets: np.ndarray) -> Any:
-    return sklearn.metrics.f1_score(targets, preds, average="macro") * 100.0
+    return skl_f1_score(targets, preds, average="macro") * 100.0
 
 
 def klue_nli_acc(preds: np.ndarray, targets: np.ndarray) -> Any:
@@ -36,7 +37,7 @@ def klue_sts_f1(preds: np.ndarray, labels: np.ndarray) -> Any:
     threshold = 3
     preds = np.where(preds >= threshold, 1, 0)
     labels = np.where(labels >= threshold, 1, 0)
-    return sklearn.metrics.f1_score(labels, preds, average="binary") * 100.0
+    return skl_f1_score(labels, preds, average="binary") * 100.0
 
 
 def klue_ner_entity_macro_f1(preds: np.ndarray, labels: np.ndarray, label_list: List[str]) -> Any:
@@ -60,7 +61,7 @@ def klue_ner_char_macro_f1(preds: np.ndarray, labels: np.ndarray, label_list: Li
     label_indices = list(range(len(label_list)))
     preds = np.array(preds).flatten().tolist()
     trues = np.array(labels).flatten().tolist()
-    return sklearn.metrics.f1_score(trues, preds, labels=label_indices, average="macro", zero_division=True) * 100.0
+    return skl_f1_score(trues, preds, labels=label_indices, average="macro", zero_division=True) * 100.0
 
 
 def klue_re_micro_f1(preds: np.ndarray, labels: np.ndarray, label_list: List[str]) -> Any:
@@ -68,7 +69,7 @@ def klue_re_micro_f1(preds: np.ndarray, labels: np.ndarray, label_list: List[str
     no_relation_label_idx = label_list.index("no_relation")
     label_indices = list(range(len(label_list)))
     label_indices.remove(no_relation_label_idx)
-    return sklearn.metrics.f1_score(labels, preds, average="micro", labels=label_indices) * 100.0
+    return skl_f1_score(labels, preds, average="micro", labels=label_indices) * 100.0
 
 
 def klue_re_auprc(probs: np.ndarray, labels: np.ndarray) -> Any:
@@ -95,7 +96,7 @@ def klue_dp_uas_macro_f1(preds: List[List[DPResult]], labels: List[List[DPResult
     index = [i for i, label in enumerate(head_labels) if label == -1]
     head_preds = np.delete(head_preds, index)
     head_labels = np.delete(head_labels, index)
-    return sklearn.metrics.f1_score(head_labels.tolist(), head_preds.tolist(), average="macro") * 100.0
+    return skl_f1_score(head_labels.tolist(), head_preds.tolist(), average="macro") * 100.0
 
 
 def klue_dp_uas_micro_f1(preds: List[List[DPResult]], labels: List[List[DPResult]]) -> Any:
@@ -110,7 +111,7 @@ def klue_dp_uas_micro_f1(preds: List[List[DPResult]], labels: List[List[DPResult
     index = [i for i, label in enumerate(head_labels) if label == -1]
     head_preds = np.delete(head_preds, index)
     head_labels = np.delete(head_labels, index)
-    return sklearn.metrics.f1_score(head_labels.tolist(), head_preds.tolist(), average="micro") * 100.0
+    return skl_f1_score(head_labels.tolist(), head_preds.tolist(), average="micro") * 100.0
 
 
 def klue_dp_las_macro_f1(preds: List[List[DPResult]], labels: List[List[DPResult]]) -> Any:
@@ -151,7 +152,7 @@ def klue_dp_las_macro_f1(preds: List[List[DPResult]], labels: List[List[DPResult
     uas_incorrect = np.nonzero(np.invert(uas_correct))
     for idx in uas_incorrect:
         type_preds[idx] = PAD
-    return sklearn.metrics.f1_score(type_labels.tolist(), type_preds.tolist(), average="macro") * 100.0
+    return skl_f1_score(type_labels.tolist(), type_preds.tolist(), average="macro") * 100.0
 
 
 def klue_dp_las_micro_f1(preds: List[List[DPResult]], labels: List[List[DPResult]]) -> Any:
@@ -191,7 +192,7 @@ def klue_dp_las_micro_f1(preds: List[List[DPResult]], labels: List[List[DPResult
     uas_incorrect = np.nonzero(np.invert(uas_correct))
     for idx in uas_incorrect:
         type_preds[idx] = PAD
-    return sklearn.metrics.f1_score(type_labels.tolist(), type_preds.tolist(), average="micro") * 100.0
+    return skl_f1_score(type_labels.tolist(), type_preds.tolist(), average="micro") * 100.0
 
 
 def klue_mrc_em(preds: List[Dict[str, str]], examples: List[List[KlueMRCExample]]) -> Any:
